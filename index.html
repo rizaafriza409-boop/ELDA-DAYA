@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PZEM Monitoring - Simulasi</title>
+
+  <!-- Canvas Gauges -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-gauges@2.1.7/gauge.min.js"></script>
+
+  <style>
+    body {
+      background: #f5f5f5;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      margin: 0;
+    }
+    h2 {
+      text-align: center;
+      color: #222;
+      margin-bottom: 5px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .gauge-box {
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    }
+  </style>
+</head>
+<body>
+
+  <h2>PZEM Real-Time Monitoring (Simulasi)</h2>
+  <h2>Kelas Elektronika Daya - 2025</h2>
+
+  <div class="container">
+    <div class="gauge-box">
+      <canvas id="gaugeVolt" data-type="radial-gauge"
+        data-width="220" data-height="220"
+        data-min-value="0" data-max-value="300"
+        data-major-ticks="0,50,100,150,200,250,300"
+        data-units="V" data-title="Tegangan"
+        data-value="0" data-color-value="#FF5722"
+        data-glow="true"></canvas>
+    </div>
+
+    <div class="gauge-box">
+      <canvas id="gaugeArus" data-type="radial-gauge"
+        data-width="220" data-height="220"
+        data-min-value="0" data-max-value="50"
+        data-major-ticks="0,5,10,15,20,25,30,35,40,45,50"
+        data-units="A" data-title="Arus"
+        data-value="0" data-color-value="#2196F3"
+        data-glow="true"></canvas>
+    </div>
+
+    <div class="gauge-box">
+      <canvas id="gaugeDaya" data-type="radial-gauge"
+        data-width="220" data-height="220"
+        data-min-value="0" data-max-value="5000"
+        data-major-ticks="0,1000,2000,3000,4000,5000"
+        data-units="W" data-title="Daya"
+        data-value="0" data-color-value="#4CAF50"
+        data-glow="true"></canvas>
+    </div>
+
+    <div class="gauge-box">
+      <canvas id="gaugeKwh" data-type="radial-gauge"
+        data-width="220" data-height="220"
+        data-min-value="0" data-max-value="100"
+        data-major-ticks="0,20,40,60,80,100"
+        data-units="kWh" data-title="Energi"
+        data-value="0" data-color-value="#FF9800"
+        data-glow="true"></canvas>
+    </div>
+
+    <div class="gauge-box">
+      <canvas id="gaugeFrek" data-type="radial-gauge"
+        data-width="220" data-height="220"
+        data-min-value="40" data-max-value="60"
+        data-major-ticks="40,45,50,55,60"
+        data-units="Hz" data-title="Frekuensi"
+        data-value="50" data-color-value="#9C27B0"
+        data-glow="true"></canvas>
+    </div>
+
+    <div class="gauge-box">
+      <canvas id="gaugePf" data-type="radial-gauge"
+        data-width="220" data-height="220"
+        data-min-value="0" data-max-value="1"
+        data-major-ticks="0,0.2,0.4,0.6,0.8,1.0"
+        data-units="" data-title="Power Factor"
+        data-value="0" data-color-value="#795548"
+        data-glow="true"></canvas>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const gauges = window.gauges || [];
+        if (gauges.length < 6) return;
+
+        const gVolt = gauges[0];
+        const gArus = gauges[1];
+        const gDaya = gauges[2];
+        const gKwh  = gauges[3];
+        const gFrek = gauges[4];
+        const gPf   = gauges[5];
+
+        // === SIMULASI DATA ===
+        setInterval(() => {
+          let volt = 210 + Math.random() * 40;  // 210–250V
+          let arus = Math.random() * 10;        // 0–10A
+          let daya = volt * arus;               // sederhana
+          let kwh  = (Math.random() * 10).toFixed(2);
+          let frek = 49 + Math.random() * 2;    // 49–51Hz
+          let pf   = (0.6 + Math.random() * 0.4).toFixed(2);
+
+          gVolt.value = volt;
+          gArus.value = arus;
+          gDaya.value = daya;
+          gKwh.value  = kwh;
+          gFrek.value = frek;
+          gPf.value   = pf;
+        }, 1000);
+
+      }, 800);
+    });
+  </script>
+</body>
+</html>
